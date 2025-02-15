@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    @post_images = @user.post_images  
+    @post_images = @user.post_images
+    @post_comment = PostComment.new
   end
 
   def edit
@@ -10,8 +11,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update(user_params)
+    if @user.update(user_params)
     redirect_to user_path(@user.id)
+    else
+      redirect_to root_path
+    end
   end
 
   private
